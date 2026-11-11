@@ -23,7 +23,7 @@ mapa_romenia = {
     "Eforie": [("Hirsova", 86)],
     "Vaslui": [("Urziceni", 142), ("Iasi", 92)],
     "Iasi": [("Vaslui", 92), ("Neamt", 87)],
-    "Neamt": [("Iasi", 87)],
+    "Neamt": [("Iasi", 87)]
 }
 
 # PASSO 2: Criando a heurística como dicionário. Lembrando que o conceito de heurística é a distância em linha reta de um ponto ao outro. Neste caso, será considerado também como "h(n)".
@@ -48,5 +48,5 @@ heuristica_bucareste = {
     "Timisoara": 329,
     "Urziceni": 80,
     "Vaslui": 199,
-    "Zerind": 374,
+    "Zerind": 374
 }
