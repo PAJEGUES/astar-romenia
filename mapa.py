@@ -2,6 +2,7 @@
 # mapa.py - Mapa rodoviário da Romênia (figura 3.2 do Russell & Norvig). Ou seja, são os DADOS do problema que serão nomeados como "Fase 1".
 # Estes dados do mapa rodoviário da Romênia serão armazenados como um dicionário. Ou seja, a chave é o nome da cidade "X" e o valor são os vizinhos da cidade "X" e a distância de "X" até cada cidade vizinha.
 
+# PASSO 1: Criando o dicionário do mapa da romênia.
 mapa_romenia = {
     "Arad": [("Zerind", 75), ("Sibiu", 140), ("Timisoara", 118)],
     "Zerind": [("Arad", 75), ("Oradea", 71)],
@@ -23,4 +24,29 @@ mapa_romenia = {
     "Vaslui": [("Urziceni", 142), ("Iasi", 92)],
     "Iasi": [("Vaslui", 92), ("Neamt", 87)],
     "Neamt": [("Iasi", 87)],
+}
+
+# PASSO 2: Criando a heurística como dicionário. Lembrando que o conceito de heurística é a distância em linha reta de um ponto ao outro. Neste caso, será considerado também como "h(n)".
+
+heuristica_bucareste = {
+    "Arad": 366,
+    "Bucharest": 0,
+    "Craiova": 160,
+    "Drobeta": 242,
+    "Eforie": 161,
+    "Fagaras": 176,
+    "Giurgiu": 77,
+    "Hirsova": 151,
+    "Iasi": 226,
+    "Lugoj": 244,
+    "Mehadia": 241,
+    "Neamt": 234,
+    "Oradea": 380,
+    "Pitesti": 100,
+    "Rimnicu Vilcea": 193,
+    "Sibiu": 253,
+    "Timisoara": 329,
+    "Urziceni": 80,
+    "Vaslui": 199,
+    "Zerind": 374,
 }
