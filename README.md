@@ -28,3 +28,7 @@ Arad -> Sibiu -> Rimnicu Vilcea -> Pitesti -> Bucharest
 | fase4_expandir.py | função expandir e conjunto de explorados |
 | fase5_busca.py | busca A* com laço while |
 | a_estrela.py | programa A* completo |
+
+## Diagramas UML
+
+Os diagramas de Engenharia de Software (atividade, sequência, classes, objetos, estados e pacotes) de cada fase estão em [docs/diagramas-uml.md](docs/diagramas-uml.md).
