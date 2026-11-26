@@ -15,11 +15,11 @@ print('\nTodos os Vizinhos de Arad:', vizinhos_arad)
 vizinhos_timisoara = mapa_romenia['Timisoara']
 print('Todos os Vizinhos de Timisoara:', vizinhos_timisoara)
 
-# A partir do momento que puxamos uma chave do dicionário, puxamos TODAS AS LISTS que compõem ele. Porém, é possível também puxarmos individualmente as TUPLAS que compõem estas lists. Ou seja, cada vizinho da cidade especificada e a heurística até Bucharest.
+# A partir do momento que puxamos uma chave do dicionário, puxamos TODAS AS LISTS que compõem ele. Porém, é possível também puxarmos individualmente as TUPLAS que compõem estas lists. Ou seja, cada vizinho da cidade especificada e a distância da estrada até esse vizinho.
 
 dados_arad = vizinhos_arad[0]
 print('\nPrimeira Cidade Vizinha de Arad:', dados_arad[0])
-print('Heurística de', dados_arad[0], 'até Bucarest:', dados_arad[1])
+print('Distância da estrada de Arad até', dados_arad[0], ':', dados_arad[1], 'km')
 
 # Além disso, também é possível usar estruturas de repetição para percorrermos as chaves do dicionário e encontrarmos todas as tuplas registradas em cada chave. Ou seja, conseguimos usar este conceito para descobrirmos todos os vizinhos de uma cidade por meio de uma repetição.
 
