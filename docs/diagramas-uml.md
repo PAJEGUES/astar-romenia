@@ -1,8 +1,8 @@
 # Diagramas UML — Busca A* (Arad → Bucharest)
 
-Artefatos de Engenharia de Software do projeto: os diagramas UML que descrevem os
-arquivos, os dados e o fluxo de cada fase. Os diagramas estão em Mermaid e são
-desenhados pelo próprio GitHub.
+Arquivo responsável pelos artefatos de Engenharia de Software do projeto, ou seja, os diagramas UML que descrevem os arquivos, os dados e o fluxo de cada fase. Neste caso, os diagramas estão escritos em Mermaid e são desenhados pelo próprio GitHub.
+
+Cada diagrama possui um rótulo que informa o TIPO de diagrama, conforme a tabela abaixo:
 
 | Rótulo | Diagrama | Mostra |
 |---|---|---|
@@ -30,7 +30,7 @@ desenhados pelo próprio GitHub.
 
 ### Diagrama 1 — Roteiro do projeto (act)
 
-Cada fase termina com um commit e um push.
+Cada fase do projeto termina com um commit e um push para o GitHub. Ou seja, o repositório guarda o histórico de todas as fases.
 
 ```mermaid
 flowchart LR
@@ -47,8 +47,7 @@ flowchart LR
 
 ### Diagrama 2 — Arquivos do projeto e suas dependências (pkg)
 
-A seta tracejada «import» quer dizer "usa os dados de". Cada fase é um arquivo novo que faz
-`from mapa import mapa_romenia, heuristica_bucareste`.
+A seta tracejada «import» quer dizer "usa os dados de". Neste caso, cada fase é um arquivo novo que faz `from mapa import mapa_romenia, heuristica_bucareste`, ou seja, todas as fases usam os MESMOS dados cadastrados em "mapa.py".
 
 ```mermaid
 flowchart LR
@@ -82,6 +81,8 @@ flowchart LR
 
 ### Diagrama 3 — O que se faz no navegador e no computador (act, com raias)
 
+Antes de começar o código é necessário preparar o ambiente. Neste caso, algumas etapas são feitas no navegador (no site do GitHub) e outras no computador (no terminal e no VS Code).
+
 ```mermaid
 flowchart TB
     inicio(( )) --> C1
@@ -108,6 +109,8 @@ flowchart TB
 
 ### Diagrama 4 — Por quais estados um arquivo passa no Git (stm)
 
+Toda vez que um arquivo é criado ou editado ele passa por estes estados até chegar no GitHub. Ou seja, o arquivo só aparece no GitHub depois do `git push`.
+
 ```mermaid
 stateDiagram-v2
     [*] --> Modificado : você cria ou edita um arquivo
@@ -130,6 +133,8 @@ stateDiagram-v2
 ## Fase 1 — Navegar nos dados
 
 ### Diagrama 5 — Estrutura de dados do mapa (class)
+
+O mapa da Romênia é um DICIONÁRIO onde a chave é o nome da cidade e o valor é uma LIST de estradas. Neste caso, cada estrada é uma TUPLA com o nome da cidade vizinha e a distância em KM até ela.
 
 ```mermaid
 classDiagram
@@ -161,7 +166,7 @@ classDiagram
 
 ### Diagrama 6 — `mapa_romenia['Arad']` na memória (object)
 
-Os números entre colchetes são os índices.
+Quando puxamos a chave 'Arad' do dicionário, puxamos TODA A LIST de estradas que sai de Arad. Neste caso, os números entre colchetes são os índices de cada posição.
 
 ```mermaid
 flowchart LR
@@ -184,16 +189,18 @@ flowchart LR
 
 ### Diagrama 7 — Fluxo do script `fase1_explorar.py` (act)
 
+O script da fase 1 navega nos dados sem fazer nenhuma busca. Neste caso, além de Arad, os vizinhos de Timisoara também são consultados.
+
 ```mermaid
 flowchart TB
     inicio(( )) --> P1
-    P1["Passo 1: importar os dados de mapa.py<br/>from mapa import ..."]
-    P2["Passo 2: contar as cidades<br/>len(mapa_romenia)"]
-    P3["Passo 3: ler o valor da chave 'Arad'<br/>mapa_romenia['Arad']"]
-    P4["Passo 4: pegar uma tupla e suas partes<br/>primeira[0], primeira[1]"]
-    P5["Passo 5: percorrer as estradas de Arad<br/>for vizinho, custo in ..."]
-    P6["Passo 6: percorrer o mapa inteiro<br/>for cidade in mapa_romenia"]
-    P7["Passo 7: consultar a heurística<br/>heuristica_bucareste[vizinho]"]
+    P1["Importar os dados de mapa.py<br/>from mapa import ..."]
+    P2["Contar as cidades e as heurísticas<br/>len(mapa_romenia), len(heuristica_bucareste)"]
+    P3["Ler os vizinhos de Arad e de Timisoara<br/>mapa_romenia['Arad'], mapa_romenia['Timisoara']"]
+    P4["Pegar a primeira tupla de Arad e suas partes<br/>dados_arad[0], dados_arad[1]"]
+    P5["Percorrer as estradas de Arad e de Timisoara<br/>for vizinho, custo in ..."]
+    P6["Contar os vizinhos de cada cidade<br/>for cidade in mapa_romenia"]
+    P7["Consultar a heurística de Arad e dos vizinhos<br/>heuristica_bucareste[vizinho]"]
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> fim((( )))
 ```
 
@@ -202,6 +209,8 @@ flowchart TB
 ## Fase 2 — Custo de caminho e f = g + h
 
 ### Diagrama 8 — Chamadas para calcular o custo de um caminho (sd)
+
+A função `custo_do_caminho` chama a função `custo_da_estrada` uma vez para cada par de cidades do caminho. Ou seja, o custo TOTAL é a soma de todas as estradas (neste exemplo, o caminho de Arad por Fagaras com 450 km).
 
 ```mermaid
 sequenceDiagram
@@ -228,7 +237,7 @@ sequenceDiagram
 
 ### Diagrama 9 — O nó de busca e a fronteira (class)
 
-A fronteira é uma lista de nós. Exemplo de nó: `(393, 140, 'Sibiu', ['Arad', 'Sibiu'])`.
+A fronteira é uma LIST que guarda todos os nós que ainda podem ser expandidos. Neste caso, cada nó é uma TUPLA com 4 posições, por exemplo: `(393, 140, 'Sibiu', ['Arad', 'Sibiu'])`.
 
 ```mermaid
 classDiagram
@@ -250,6 +259,8 @@ classDiagram
 ```
 
 ### Diagrama 10 — Primeira expansão, feita à mão (sd)
+
+A primeira expansão partindo de Arad é feita de forma manual. Ou seja, o nó inicial é retirado da fronteira, os vizinhos de Arad são gerados e a fronteira é ordenada pelo f. Na fase 3 o mesmo processo também é feito partindo de Timisoara (o próximo nó é Lugoj) e de Rimnicu Vilcea (o próximo nó é Pitesti).
 
 ```mermaid
 sequenceDiagram
@@ -276,7 +287,7 @@ sequenceDiagram
 
 ### Diagrama 11 — Três fotografias da fronteira (object)
 
-O nó em destaque é o de menor f.
+Estas são três fotografias da fronteira de Arad, uma depois de cada operação. Neste caso, o nó em destaque é o de MENOR f, ou seja, o próximo a ser expandido.
 
 ```mermaid
 flowchart TB
@@ -305,6 +316,8 @@ flowchart TB
 
 ### Diagrama 12 — A função `expandir(no, explorados)` (act)
 
+A função expandir percorre os vizinhos da cidade do nó e devolve uma LIST com os filhos. Porém, caso o vizinho já esteja no conjunto de EXPLORADOS, o `continue` pula esse vizinho.
+
 ```mermaid
 flowchart TB
     inicio(( )) --> A["Desempacotar o nó<br/>f_atual, g_atual, cidade_atual, caminho = no"]
@@ -319,6 +332,8 @@ flowchart TB
 ```
 
 ### Diagrama 13 — Uma rodada da busca, repetida 3 vezes (sd)
+
+Em cada rodada a fronteira é ordenada, o nó de menor f é retirado e os filhos dele entram na fronteira. Neste caso, as três rodadas são feitas partindo de Arad, de Timisoara e de Rimnicu Vilcea (que já chega em Bucharest na rodada 3).
 
 ```mermaid
 sequenceDiagram
@@ -346,8 +361,7 @@ sequenceDiagram
 
 ### Diagrama 14 — O algoritmo A* `busca_a_estrela(inicio, objetivo)` (act)
 
-O teste de objetivo é feito ao **retirar** o nó da fronteira, não ao gerá-lo. É isso que
-garante o caminho ótimo.
+O teste de objetivo é feito no momento em que o nó é **RETIRADO** da fronteira e não quando ele é gerado. Ou seja, é isso que garante que nenhum caminho mais barato ficou para trás (caminho ótimo).
 
 ```mermaid
 flowchart TB
@@ -372,6 +386,8 @@ flowchart TB
 
 ### Diagrama 15 — O programa completo `a_estrela.py` (sd)
 
+O `main()` faz a busca com o rastro completo partindo de Arad, Timisoara e Rimnicu Vilcea. Neste caso, depois de cada busca o resultado é mostrado e conferido com o valor esperado (418, 536 e 198 km). Além disso, no fim é feito um teste com uma cidade que não existe no mapa, tratado com `try/except`.
+
 ```mermaid
 sequenceDiagram
     participant P as Python
@@ -379,30 +395,36 @@ sequenceDiagram
     participant B as busca_a_estrela()
     participant F as fronteira
     participant R as resumo_fronteira()
+    participant MR as mostrar_resultado()
+    participant C as conferir()
     P->>M: __name__ == '__main__' -> main()
-    M->>B: busca_a_estrela('Arad', 'Bucharest', ...)
-    loop while fronteira
-        B->>F: sort(...) e pop(0)
-        F-->>B: nó de menor f
-        Note over B: imprime 'N. Expandindo: ...'
-        opt cidade == objetivo
-            B-->>M: return caminho, g_atual
+    loop origem em Arad, Timisoara, Rimnicu Vilcea
+        M->>B: busca_a_estrela(origem, 'Bucharest', ...)
+        loop while fronteira
+            B->>F: sort(...) e pop(0)
+            F-->>B: nó de menor f
+            Note over B: imprime 'N. Expandindo: ...'
+            opt cidade == objetivo
+                B-->>M: return caminho, g_atual
+            end
+            B->>F: append(filhos)
+            B->>R: resumo_fronteira(fronteira)
+            R-->>B: texto 'Cidade(f), ...'
         end
-        B->>F: append(filhos)
-        B->>R: resumo_fronteira(fronteira)
-        R-->>B: texto 'Cidade(f), ...'
+        M->>MR: mostrar_resultado(caminho, custo)
+        M->>C: conferir(caminho, custo, esperado, passos)
     end
-    Note over M: imprime resultado e confere 418
     loop origem em outras cidades
         M->>B: busca_a_estrela(origem, ..., mostrar=False)
         B-->>M: (caminho, custo)
     end
+    M->>B: busca_a_estrela('Sao Paulo', ...)
+    B-->>M: KeyError (tratado com try/except)
 ```
 
 ### Diagrama 16 — Árvore de busca gerada pelo A* (object)
 
-O número antes do nome é a ordem em que o nó saiu da fronteira. Bucharest (450) foi gerado
-mas nunca retirado, porque 418 < 450. Em verde, o caminho ótimo.
+O número antes do nome é a ordem em que o nó saiu da fronteira. Neste caso, Bucharest (450) foi gerado mas nunca foi retirado, pois 418 < 450. Ou seja, o caminho por Fagaras foi descartado. Em verde, o caminho ótimo partindo de Arad.
 
 ```mermaid
 flowchart TB
@@ -435,7 +457,7 @@ flowchart TB
     class b450 descartado
 ```
 
-Rastro completo, iteração por iteração (saída real de `python a_estrela.py`):
+Rastro completo partindo de Arad, iteração por iteração (saída real de `python a_estrela.py`):
 
 | # | Expande | g | h | f | Fronteira depois (ordenada por f) |
 |---|---|---|---|---|---|
